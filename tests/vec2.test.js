@@ -342,3 +342,15 @@ test('normalize', () => {
     expect(vec[0]).toBeCloseTo(Math.SQRT1_2);
     expect(vec[1]).toBeCloseTo(Math.SQRT1_2);
 });
+
+test('normalize zero', () => {
+    // Arrange
+    const vec = new Vec2(0, 0);
+
+    // Act
+    vec.normalize();
+
+    // Assert
+    expect(vec[0]).toBe(0);
+    expect(vec[1]).toBe(0);
+});

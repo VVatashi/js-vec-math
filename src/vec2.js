@@ -1,3 +1,62 @@
+/**
+ * @param {number[]|Float32Array} a
+ * @param {number[]|Float32Array} b
+ */
+export /*@__INLINE__*/ function dot(a, b) {
+    return a[0] * b[0] + a[1] * b[1];
+};
+
+/** @param {number[]|Float32Array} vec */
+export /*@__INLINE__*/ function sqrMagnitude(vec) {
+    return /*@__PURE__*/ dot(vec, vec);
+}
+
+/** @param {number[]|Float32Array} vec */
+export /*@__INLINE__*/ function magnitude(vec) {
+    return /*@__PURE__*/ Math.sqrt(/*@__PURE__*/ sqrMagnitude(vec));
+}
+
+/**
+ * @param {number[]|Float32Array} a
+ * @param {number[]|Float32Array} b
+ */
+export /*@__INLINE__*/ function sqrDistance(a, b) {
+    return /*@__PURE__*/ sqrMagnitude([a[0] - b[0], a[1] - b[1]]);
+}
+
+/**
+ * @param {number[]|Float32Array} a
+ * @param {number[]|Float32Array} b
+ */
+export /*@__INLINE__*/ function distance(a, b) {
+    return /*@__PURE__*/ Math.sqrt(/*@__PURE__*/ sqrDistance(a, b));
+}
+
+/**
+ * @param {number[]|Float32Array} a
+ * @param {number[]|Float32Array} b
+ */
+export /*@__INLINE__*/ function min(a, b) {
+    return [/*@__PURE__*/ Math.min(a[0], b[0]), /*@__PURE__*/ Math.min(a[1], b[1])];
+}
+
+/**
+ * @param {number[]|Float32Array} a
+ * @param {number[]|Float32Array} b
+ */
+export /*@__INLINE__*/ function max(a, b) {
+    return [/*@__PURE__*/ Math.max(a[0], b[0]), /*@__PURE__*/ Math.max(a[1], b[1])];
+}
+
+/**
+ * @param {number[]|Float32Array} a
+ * @param {number[]|Float32Array} b
+ * @param {number} t
+ */
+export /*@__INLINE__*/ function lerp(a, b, t) {
+    return [a[0] * (1 - t) + b[0] * t, a[1] * (1 - t) + b[1] * t];
+}
+
 export class Vec2 extends Float32Array {
     static get zero() { return [0, 0]; }
     static get one() { return [1, 1]; }
@@ -47,61 +106,11 @@ export class Vec2 extends Float32Array {
         }
     }
 
-    /**
-     * @param {number[]|Float32Array} a
-     * @param {number[]|Float32Array} b
-     */
-    static sqrDistance(a, b) {
-        const dx = a[0] - b[0];
-        const dy = a[1] - b[1];
-
-        return dx * dx + dy * dy;
-    }
-
-    /**
-     * @param {number[]|Float32Array} a
-     * @param {number[]|Float32Array} b
-     */
-    static distance(a, b) {
-        const dx = a[0] - b[0];
-        const dy = a[1] - b[1];
-
-        return Math.sqrt(dx * dx + dy * dy);
-    }
-
-    /**
-     * @param {number[]|Float32Array} a
-     * @param {number[]|Float32Array} b
-     */
-    static min(a, b) {
-        const x = Math.min(a[0], b[0]);
-        const y = Math.min(a[1], b[1]);
-
-        return new Vec2(x, y);
-    }
-
-    /**
-     * @param {number[]|Float32Array} a
-     * @param {number[]|Float32Array} b
-     */
-    static max(a, b) {
-        const x = Math.max(a[0], b[0]);
-        const y = Math.max(a[1], b[1]);
-
-        return new Vec2(x, y);
-    }
-
-    /**
-     * @param {number[]|Float32Array} a
-     * @param {number[]|Float32Array} b
-     * @param {number} t
-     */
-    static lerp(a, b, t) {
-        const x = a[0] * (1 - t) + b[0] * t;
-        const y = a[1] * (1 - t) + b[1] * t;
-
-        return new Vec2(x, y);
-    }
+    static sqrDistance = sqrDistance;
+    static distance = distance;
+    static min = min;
+    static max = max;
+    static lerp = lerp;
 
     /** @param {number[]|Float32Array} vec */
     add(vec) {
@@ -136,23 +145,25 @@ export class Vec2 extends Float32Array {
     }
 
     /** @param {number[]|Float32Array} vec */
-    dot(vec) {
-        return this[0] * vec[0] + this[1] * vec[1];
+    /*@__INLINE__*/ dot(vec) {
+        return /*@__PURE__*/ dot(this, vec);
     }
 
-    sqrMagnitude() {
-        return this[0] * this[0] + this[1] * this[1];
+    /*@__INLINE__*/ sqrMagnitude() {
+        return /*@__PURE__*/ sqrMagnitude(this);
     }
 
-    magnitude() {
-        return Math.sqrt(this[0] * this[0] + this[1] * this[1]);
+    /*@__INLINE__*/ magnitude() {
+        return /*@__PURE__*/ magnitude(this);
     }
 
     normalize() {
-        const magnitude = Math.sqrt(this[0] * this[0] + this[1] * this[1]);
+        const length = /*@__PURE__*/ magnitude(this);
 
-        this[0] /= magnitude;
-        this[1] /= magnitude;
+        if (length === 0) return this;
+
+        this[0] /= length;
+        this[1] /= length;
 
         return this;
     }

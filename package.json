@@ -4,6 +4,7 @@
   "description": "",
   "author": "VVatashi",
   "license": "MIT",
+  "private": "true",
   "type": "module",
   "main": "src/index.js",
   "devDependencies": {
