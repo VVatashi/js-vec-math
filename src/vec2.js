@@ -89,14 +89,16 @@ export class Vec2 extends Float32Array {
 
     /** @param {number|number[]|Float32Array} values */
     constructor(...values) {
+        const components = 2;
+
         switch (values.length) {
             case 0:
-                super(2);
+                super(components);
                 break;
 
             case 1:
                 if (typeof values[0] === 'number')
-                    super(2).fill(values[0]);
+                    super(components).fill(values[0]);
                 else
                     super(values[0]);
                 break;
@@ -162,10 +164,7 @@ export class Vec2 extends Float32Array {
 
         if (length === 0) return this;
 
-        this[0] /= length;
-        this[1] /= length;
-
-        return this;
+        return this.divide(length);
     }
 }
 
