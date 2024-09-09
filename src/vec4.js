@@ -5,7 +5,7 @@ import { MathUtils } from "@vvatashi/js-math-utils";
  * @param {number[]|Float32Array} b
  */
 export /*@__INLINE__*/ function dot(a, b) {
-    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3];
+    return /*@__PURE__*/ Math.fround(a[0] * b[0] + a[1] * b[1] + a[2] * b[2] + a[3] * b[3]);
 };
 
 /** @param {number[]|Float32Array} vec */
@@ -15,7 +15,7 @@ export /*@__INLINE__*/ function sqrMagnitude(vec) {
 
 /** @param {number[]|Float32Array} vec */
 export /*@__INLINE__*/ function magnitude(vec) {
-    return /*@__PURE__*/ Math.hypot(...vec);
+    return /*@__PURE__*/ Math.fround(Math.hypot(...vec));
 }
 
 /**
@@ -23,12 +23,7 @@ export /*@__INLINE__*/ function magnitude(vec) {
  * @param {number[]|Float32Array} b
  */
 export /*@__INLINE__*/ function sqrDistance(a, b) {
-    return /*@__PURE__*/ sqrMagnitude([
-        a[0] - b[0],
-        a[1] - b[1],
-        a[2] - b[2],
-        a[3] - b[3],
-    ]);
+    return /*@__PURE__*/ sqrMagnitude([a[0] - b[0], a[1] - b[1], a[2] - b[2], a[3] - b[3]]);
 }
 
 /**
@@ -36,7 +31,7 @@ export /*@__INLINE__*/ function sqrDistance(a, b) {
  * @param {number[]|Float32Array} b
  */
 export /*@__INLINE__*/ function distance(a, b) {
-    return /*@__PURE__*/ Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2], a[3] - b[3]);
+    return /*@__PURE__*/ Math.fround(Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2], a[3] - b[3]));
 }
 
 /**
@@ -45,10 +40,10 @@ export /*@__INLINE__*/ function distance(a, b) {
  */
 export /*@__INLINE__*/ function min(a, b) {
     return [
-        /*@__PURE__*/ Math.min(a[0], b[0]),
-        /*@__PURE__*/ Math.min(a[1], b[1]),
-        /*@__PURE__*/ Math.min(a[2], b[2]),
-        /*@__PURE__*/ Math.min(a[3], b[3]),
+        /*@__PURE__*/ Math.fround(Math.min(a[0], b[0])),
+        /*@__PURE__*/ Math.fround(Math.min(a[1], b[1])),
+        /*@__PURE__*/ Math.fround(Math.min(a[2], b[2])),
+        /*@__PURE__*/ Math.fround(Math.min(a[3], b[3])),
     ];
 }
 
@@ -58,10 +53,10 @@ export /*@__INLINE__*/ function min(a, b) {
  */
 export /*@__INLINE__*/ function max(a, b) {
     return [
-        /*@__PURE__*/ Math.max(a[0], b[0]),
-        /*@__PURE__*/ Math.max(a[1], b[1]),
-        /*@__PURE__*/ Math.max(a[2], b[2]),
-        /*@__PURE__*/ Math.max(a[3], b[3]),
+        /*@__PURE__*/ Math.fround(Math.max(a[0], b[0])),
+        /*@__PURE__*/ Math.fround(Math.max(a[1], b[1])),
+        /*@__PURE__*/ Math.fround(Math.max(a[2], b[2])),
+        /*@__PURE__*/ Math.fround(Math.max(a[3], b[3])),
     ];
 }
 
