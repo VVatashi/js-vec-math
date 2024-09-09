@@ -51,12 +51,62 @@ export /*@__INLINE__*/ function max(a, b) {
 }
 
 /**
+ * @param {number[]|Float32Array} value
+ * @param {number[]|Float32Array} min
+ * @param {number[]|Float32Array} max
+ */
+export /*@__INLINE__*/ function clamp(value, min, max) {
+    return [
+        /*@__PURE__*/ MathUtils.clamp(value[0], min[0], max[0]),
+        /*@__PURE__*/ MathUtils.clamp(value[1], min[1], max[1]),
+    ];
+}
+
+/**
  * @param {number[]|Float32Array} a
  * @param {number[]|Float32Array} b
  * @param {number} t
  */
 export /*@__INLINE__*/ function mix(a, b, t) {
-    return [/*@__PURE__*/ MathUtils.mix(a[0], b[0], t), /*@__PURE__*/ MathUtils.mix(a[1], b[1], t)];
+    return [
+        /*@__PURE__*/ MathUtils.mix(a[0], b[0], t),
+        /*@__PURE__*/ MathUtils.mix(a[1], b[1], t),
+    ];
+}
+
+/**
+ * @param {number[]|Float32Array} edge
+ * @param {number[]|Float32Array} t
+ */
+export /*@__INLINE__*/ function step(edge, t) {
+    return [
+        /*@__PURE__*/ MathUtils.step(edge[0], t[0]),
+        /*@__PURE__*/ MathUtils.step(edge[1], t[1]),
+    ];
+}
+
+/**
+ * @param {number[]|Float32Array} a
+ * @param {number[]|Float32Array} b
+ * @param {number[]|Float32Array} t
+ */
+export /*@__INLINE__*/ function smoothstep(a, b, t) {
+    return [
+        /*@__PURE__*/ MathUtils.smoothstep(a[0], b[0], t[0]),
+        /*@__PURE__*/ MathUtils.smoothstep(a[1], b[1], t[1]),
+    ];
+}
+
+/**
+ * @param {number[]|Float32Array} a
+ * @param {number[]|Float32Array} b
+ * @param {number[]|Float32Array} t
+ */
+export /*@__INLINE__*/ function smootherstep(a, b, t) {
+    return [
+        /*@__PURE__*/ MathUtils.smootherstep(a[0], b[0], t[0]),
+        /*@__PURE__*/ MathUtils.smootherstep(a[1], b[1], t[1]),
+    ];
 }
 
 export class Vec2 extends Float32Array {
@@ -117,7 +167,11 @@ export class Vec2 extends Float32Array {
     static distance = distance;
     static min = min;
     static max = max;
+    static clamp = clamp;
     static mix = mix;
+    static step = step;
+    static smoothstep = smoothstep;
+    static smootherstep = smootherstep;
 
     /** @param {number[]|Float32Array} vec */
     add(vec) {
