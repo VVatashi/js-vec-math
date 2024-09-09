@@ -252,13 +252,13 @@ test('max', () => {
     expect(c[2]).toBe(9);
 });
 
-test('lerp', () => {
+test('mix', () => {
     // Arrange
     const a = new Vec3(0, 0, 4);
     const b = new Vec3(2, 2, 2);
 
     // Act
-    const c = Vec3.lerp(a, b, 0.5);
+    const c = Vec3.mix(a, b, 0.5);
 
     // Assert
     expect(c[0]).toBe(1);

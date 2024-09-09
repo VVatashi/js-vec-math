@@ -1,3 +1,5 @@
+import { MathUtils } from "@vvatashi/js-math-utils";
+
 /**
  * @param {number[]|Float32Array} a
  * @param {number[]|Float32Array} b
@@ -25,7 +27,7 @@ export /*@__INLINE__*/ function sqrMagnitude(vec) {
 
 /** @param {number[]|Float32Array} vec */
 export /*@__INLINE__*/ function magnitude(vec) {
-    return /*@__PURE__*/ Math.sqrt(/*@__PURE__*/ sqrMagnitude(vec));
+    return /*@__PURE__*/ Math.hypot(...vec);
 }
 
 /**
@@ -45,7 +47,7 @@ export /*@__INLINE__*/ function sqrDistance(a, b) {
  * @param {number[]|Float32Array} b
  */
 export /*@__INLINE__*/ function distance(a, b) {
-    return /*@__PURE__*/ Math.sqrt(/*@__PURE__*/ sqrDistance(a, b));
+    return /*@__PURE__*/ Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]);
 }
 
 /**
@@ -77,11 +79,11 @@ export /*@__INLINE__*/ function max(a, b) {
  * @param {number[]|Float32Array} b
  * @param {number} t
  */
-export /*@__INLINE__*/ function lerp(a, b, t) {
+export /*@__INLINE__*/ function mix(a, b, t) {
     return [
-        a[0] * (1 - t) + b[0] * t,
-        a[1] * (1 - t) + b[1] * t,
-        a[2] * (1 - t) + b[2] * t,
+        /*@__PURE__*/ MathUtils.mix(a[0], b[0], t),
+        /*@__PURE__*/ MathUtils.mix(a[1], b[1], t),
+        /*@__PURE__*/ MathUtils.mix(a[2], b[2], t),
     ];
 }
 
@@ -239,11 +241,14 @@ export class Vec3 extends Float32Array {
         }
     }
 
+    static dot = dot;
+    static sqrMagnitude = sqrMagnitude;
+    static magnitude = magnitude;
     static sqrDistance = sqrDistance;
     static distance = distance;
     static min = min;
     static max = max;
-    static lerp = lerp;
+    static mix = mix;
 
     /** @param {number[]|Float32Array} vec */
     add(vec) {
