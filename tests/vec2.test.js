@@ -1,4 +1,4 @@
-import { Vec2 } from '../src';
+import { Vec2 } from '../src/vec2.js';
 
 test('zero', () => {
     // Act
