@@ -211,6 +211,22 @@ export class Vec2 extends Float32Array {
         return this;
     }
 
+    perpendicularLeft() {
+        const temp = this[0];
+        this[0] = -this[1];
+        this[1] = temp;
+
+        return this;
+    }
+
+    perpendicularRight() {
+        const temp = this[0];
+        this[0] = this[1];
+        this[1] = -temp;
+
+        return this;
+    }
+
     /** @param {number[]|Float32Array} vec */
     /*@__INLINE__*/ dot(vec) {
         return /*@__PURE__*/ dot(this, vec);
