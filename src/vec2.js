@@ -6,7 +6,7 @@ import { MathUtils } from '@vvatashi/js-math-utils/src/utils.js';
  */
 export /*@__INLINE__*/ function dot(a, b) {
     return /*@__PURE__*/ Math.fround(a[0] * b[0] + a[1] * b[1]);
-};
+}
 
 /** @param {number[]|Float32Array} vec */
 export /*@__INLINE__*/ function sqrMagnitude(vec) {
@@ -39,10 +39,7 @@ export /*@__INLINE__*/ function distance(a, b) {
  * @param {number[]|Float32Array} b
  */
 export /*@__INLINE__*/ function min(a, b) {
-    return [
-        /*@__PURE__*/ Math.fround(Math.min(a[0], b[0])),
-        /*@__PURE__*/ Math.fround(Math.min(a[1], b[1])),
-    ];
+    return [/*@__PURE__*/ Math.fround(Math.min(a[0], b[0])), /*@__PURE__*/ Math.fround(Math.min(a[1], b[1]))];
 }
 
 /**
@@ -50,10 +47,7 @@ export /*@__INLINE__*/ function min(a, b) {
  * @param {number[]|Float32Array} b
  */
 export /*@__INLINE__*/ function max(a, b) {
-    return [
-        /*@__PURE__*/ Math.fround(Math.max(a[0], b[0])),
-        /*@__PURE__*/ Math.fround(Math.max(a[1], b[1])),
-    ];
+    return [/*@__PURE__*/ Math.fround(Math.max(a[0], b[0])), /*@__PURE__*/ Math.fround(Math.max(a[1], b[1]))];
 }
 
 /**
@@ -74,10 +68,7 @@ export /*@__INLINE__*/ function clamp(value, min, max) {
  * @param {number} t
  */
 export /*@__INLINE__*/ function mix(a, b, t) {
-    return [
-        /*@__PURE__*/ MathUtils.mix(a[0], b[0], t),
-        /*@__PURE__*/ MathUtils.mix(a[1], b[1], t),
-    ];
+    return [/*@__PURE__*/ MathUtils.mix(a[0], b[0], t), /*@__PURE__*/ MathUtils.mix(a[1], b[1], t)];
 }
 
 /**
@@ -85,10 +76,7 @@ export /*@__INLINE__*/ function mix(a, b, t) {
  * @param {number[]|Float32Array} t
  */
 export /*@__INLINE__*/ function step(edge, t) {
-    return [
-        /*@__PURE__*/ MathUtils.step(edge[0], t[0]),
-        /*@__PURE__*/ MathUtils.step(edge[1], t[1]),
-    ];
+    return [/*@__PURE__*/ MathUtils.step(edge[0], t[0]), /*@__PURE__*/ MathUtils.step(edge[1], t[1])];
 }
 
 /**
@@ -97,10 +85,7 @@ export /*@__INLINE__*/ function step(edge, t) {
  * @param {number[]|Float32Array} t
  */
 export /*@__INLINE__*/ function smoothstep(a, b, t) {
-    return [
-        /*@__PURE__*/ MathUtils.smoothstep(a[0], b[0], t[0]),
-        /*@__PURE__*/ MathUtils.smoothstep(a[1], b[1], t[1]),
-    ];
+    return [/*@__PURE__*/ MathUtils.smoothstep(a[0], b[0], t[0]), /*@__PURE__*/ MathUtils.smoothstep(a[1], b[1], t[1])];
 }
 
 /**
@@ -116,34 +101,58 @@ export /*@__INLINE__*/ function smootherstep(a, b, t) {
 }
 
 export class Vec2 extends Float32Array {
-    static get zero() { return [0, 0]; }
-    static get one() { return [1, 1]; }
-    static get unitX() { return [1, 0]; }
-    static get unitY() { return [0, 1]; }
+    static get zero() {
+        return [0, 0];
+    }
+    static get one() {
+        return [1, 1];
+    }
+    static get unitX() {
+        return [1, 0];
+    }
+    static get unitY() {
+        return [0, 1];
+    }
 
     /** @returns {number} */
-    get x() { return this[0]; }
+    get x() {
+        return this[0];
+    }
 
     /** @param {number} value */
-    set x(value) { this[0] = value; }
+    set x(value) {
+        this[0] = value;
+    }
 
     /** @returns {number} */
-    get y() { return this[1]; }
+    get y() {
+        return this[1];
+    }
 
     /** @param {number} value */
-    set y(value) { this[1] = value; }
+    set y(value) {
+        this[1] = value;
+    }
 
     /** @returns {number[]} */
-    get xx() { return [this[0], this[0]]; }
+    get xx() {
+        return [this[0], this[0]];
+    }
 
     /** @returns {number[]} */
-    get xy() { return [this[0], this[1]]; }
+    get xy() {
+        return [this[0], this[1]];
+    }
 
     /** @returns {number[]} */
-    get yx() { return [this[1], this[0]]; }
+    get yx() {
+        return [this[1], this[0]];
+    }
 
     /** @returns {number[]} */
-    get yy() { return [this[1], this[1]]; }
+    get yy() {
+        return [this[1], this[1]];
+    }
 
     /** @param {number|number[]|Float32Array} values */
     constructor(...values) {
@@ -155,10 +164,8 @@ export class Vec2 extends Float32Array {
                 break;
 
             case 1:
-                if (typeof values[0] === 'number')
-                    super(components).fill(values[0]);
-                else
-                    super(values[0]);
+                if (typeof values[0] === 'number') super(components).fill(values[0]);
+                else super(values[0]);
                 break;
 
             default:
