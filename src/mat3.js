@@ -19,8 +19,8 @@ export /*@__INLINE__*/ function translation(x, y) {
 
 /** @param {number} a Angle */
 export function rotationX(a) {
-    const cosA = Math.fround(Math.cos(a));
-    const sinA = Math.fround(Math.sin(a));
+    const cosA = /*@__PURE__*/ Math.fround(Math.cos(a));
+    const sinA = /*@__PURE__*/ Math.fround(Math.sin(a));
 
     // prettier-ignore
     return  [
@@ -32,21 +32,21 @@ export function rotationX(a) {
 
 /** @param {number} a Angle */
 export function rotationY(a) {
-    const cosA = Math.fround(Math.cos(a));
-    const sinA = Math.fround(Math.sin(a));
+    const cosA = /*@__PURE__*/ Math.fround(Math.cos(a));
+    const sinA = /*@__PURE__*/ Math.fround(Math.sin(a));
 
     // prettier-ignore
     return  [
         cosA, 0, -sinA,
-        0,    1,    0,
+           0, 1,     0,
         sinA, 0,  cosA,
     ];
 }
 
 /** @param {number} a Angle */
 export function rotationZ(a) {
-    const cosA = Math.fround(Math.cos(a));
-    const sinA = Math.fround(Math.sin(a));
+    const cosA = /*@__PURE__*/ Math.fround(Math.cos(a));
+    const sinA = /*@__PURE__*/ Math.fround(Math.sin(a));
 
     // prettier-ignore
     return  [
@@ -74,9 +74,9 @@ export /*@__INLINE__*/ function scale(s) {
  */
 export function multiply(a, b) {
     const result = new Array(ELEMENTS);
-    for (i = 0; i < ROWS; i++)
-        for (j = 0; j < COLUMNS; j++)
-            result[COLUMNS * i + j] = dot(
+    for (let i = 0; i < ROWS; i++)
+        for (let j = 0; j < COLUMNS; j++)
+            result[COLUMNS * i + j] = /*@__PURE__*/ dot(
                 [a[COLUMNS * i], a[COLUMNS * i + 1], a[COLUMNS * i + 2]],
                 [b[j], b[COLUMNS + j], b[COLUMNS * 2 + j]]
             );
@@ -176,7 +176,7 @@ export class Mat3 extends Float32Array {
 
     /** @param {number} i Row */
     /*@__INLINE__*/ getRow(i) {
-        return [this[COLUMNS * i], this[COLUMNS * i + 1]];
+        return [this[COLUMNS * i], this[COLUMNS * i + 1], this[COLUMNS * i + 2]];
     }
 
     /**
@@ -185,14 +185,14 @@ export class Mat3 extends Float32Array {
      * @param {number} offset
      */
     setRow(i, values, offset = 0) {
-        for (j = 0; j < COLUMNS; j++) this[COLUMNS * i + j] = values[offset + j];
+        for (let j = 0; j < COLUMNS; j++) this[COLUMNS * i + j] = values[offset + j];
 
         return this;
     }
 
     /** @param {number} j Column */
     /*@__INLINE__*/ getColumn(j) {
-        return [this[j], this[COLUMNS + j]];
+        return [this[j], this[COLUMNS + j], this[COLUMNS * 2 + j]];
     }
 
     /**
@@ -201,7 +201,7 @@ export class Mat3 extends Float32Array {
      * @param {number} offset
      */
     setColumn(j, values, offset = 0) {
-        for (i = 0; i < ROWS; i++) this[COLUMNS * i + j] = values[offset + i];
+        for (let i = 0; i < ROWS; i++) this[COLUMNS * i + j] = values[offset + i];
 
         return this;
     }

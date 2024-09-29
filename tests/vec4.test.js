@@ -1,5 +1,6 @@
-import { expect, test } from '@jest/globals';
-import { Vec4 } from '../src/vec4.js';
+import { expect, test, it } from '@jest/globals';
+import Vec4 from '../src/vec4.js';
+import Mat4 from '../src/mat4.js';
 
 test('zero', () => {
     // Act
@@ -442,4 +443,16 @@ test('normalize zero', () => {
     expect(vec[1]).toBe(0);
     expect(vec[2]).toBe(0);
     expect(vec[3]).toBe(0);
+});
+
+it.each([
+    [Mat4.translation(1, 2, 3), [0, 0, 0, 1], [1, 2, 3, 1]],
+    [Mat4.scale(2), [1, 2, 3, 1], [2, 4, 6, 1]],
+    [Mat4.rotationX(Math.PI / 2), [1, 2, 3, 1], [1, -3, 2, 1]],
+])('expect transformed(%j, %j) to be %j', (matrix, vector, expected) => {
+    // Act
+    const result = Vec4.transformed(vector, matrix);
+
+    // Assert
+    expect([...result]).toStrictEqual([...expected]);
 });

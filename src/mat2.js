@@ -6,8 +6,8 @@ export const ELEMENTS = COLUMNS * ROWS;
 
 /** @param {number} a Angle */
 export function rotation(a) {
-    const cosA = Math.fround(Math.cos(a));
-    const sinA = Math.fround(Math.sin(a));
+    const cosA = /*@__PURE__*/ Math.fround(Math.cos(a));
+    const sinA = /*@__PURE__*/ Math.fround(Math.sin(a));
 
     // prettier-ignore
     return  [
@@ -31,9 +31,9 @@ export /*@__INLINE__*/ function scale(s) {
  */
 export function multiply(a, b) {
     const result = new Array(ELEMENTS);
-    for (i = 0; i < ROWS; i++)
-        for (j = 0; j < COLUMNS; j++)
-            result[COLUMNS * i + j] = dot([a[COLUMNS * i], a[COLUMNS * i + 1]], [b[j], b[COLUMNS + j]]);
+    for (let i = 0; i < ROWS; i++)
+        for (let j = 0; j < COLUMNS; j++)
+            result[COLUMNS * i + j] = /*@__PURE__*/ dot([a[COLUMNS * i], a[COLUMNS * i + 1]], [b[j], b[COLUMNS + j]]);
 
     return result;
 }
@@ -125,7 +125,7 @@ export class Mat2 extends Float32Array {
      * @param {number} offset
      */
     setRow(i, values, offset = 0) {
-        for (j = 0; j < COLUMNS; j++) this[COLUMNS * i + j] = values[offset + j];
+        for (let j = 0; j < COLUMNS; j++) this[COLUMNS * i + j] = values[offset + j];
 
         return this;
     }
@@ -141,7 +141,7 @@ export class Mat2 extends Float32Array {
      * @param {number} offset
      */
     setColumn(j, values, offset = 0) {
-        for (i = 0; i < ROWS; i++) this[COLUMNS * i + j] = values[offset + i];
+        for (let i = 0; i < ROWS; i++) this[COLUMNS * i + j] = values[offset + i];
 
         return this;
     }

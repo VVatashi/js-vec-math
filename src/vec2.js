@@ -1,4 +1,4 @@
-import { MathUtils } from '@vvatashi/js-math-utils/src/utils.js';
+import MathUtils from '@vvatashi/js-math-utils/src/utils.js';
 
 export const ELEMENTS = 2;
 

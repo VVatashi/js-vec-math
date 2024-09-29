@@ -1,5 +1,5 @@
 import { expect, test } from '@jest/globals';
-import { Vec2 } from '../src/vec2.js';
+import Vec2 from '../src/vec2.js';
 
 test('zero', () => {
     // Act

@@ -1,4 +1,5 @@
-import { MathUtils } from '@vvatashi/js-math-utils/src/utils.js';
+import MathUtils from '@vvatashi/js-math-utils/src/utils.js';
+import { COLUMNS } from './mat4.js';
 
 export const ELEMENTS = 4;
 
@@ -129,6 +130,29 @@ export /*@__INLINE__*/ function smootherstep(a, b, t) {
         /*@__PURE__*/ MathUtils.smootherstep(a[2], b[2], t[2]),
         /*@__PURE__*/ MathUtils.smootherstep(a[3], b[3], t[3]),
     ];
+}
+
+/**
+ * @param {number[]|Float32Array} v Vector
+ * @param {number[]|Float32Array} m Matrix
+ */
+export /*@__INLINE__*/ function transformed(v, m) {
+    return [
+        /*@__PURE__*/ dot([m[0], m[COLUMNS], m[COLUMNS * 2], m[COLUMNS * 3]], v),
+        /*@__PURE__*/ dot([m[1], m[COLUMNS + 1], m[COLUMNS * 2 + 1], m[COLUMNS * 3 + 1]], v),
+        /*@__PURE__*/ dot([m[2], m[COLUMNS + 2], m[COLUMNS * 2 + 2], m[COLUMNS * 3 + 2]], v),
+        /*@__PURE__*/ dot([m[3], m[COLUMNS + 3], m[COLUMNS * 2 + 3], m[COLUMNS * 3 + 3]], v),
+    ];
+}
+
+/**
+ * @param {number[]|Float32Array} v Vector
+ * @param {number[]|Float32Array} m Matrix
+ */
+export /*@__INLINE__*/ function transform(v, m) {
+    [v[0], v[1], v[2], v[3]] = /*@__PURE__*/ transformed(v, m);
+
+    return v;
 }
 
 export class Vec4 extends Float32Array {
@@ -1905,6 +1929,8 @@ export class Vec4 extends Float32Array {
     static step = step;
     static smoothstep = smoothstep;
     static smootherstep = smootherstep;
+    static transformed = transformed;
+    static transform = transform;
 
     /**
      * @param {number[]|Float32Array} values
@@ -1973,6 +1999,16 @@ export class Vec4 extends Float32Array {
         if (length === 0) return this;
 
         return this.divide(length);
+    }
+
+    /** @param {number[]|Float32Array} m Matrix */
+    transformed(m) {
+        return /*@__PURE__*/ transformed(this, m);
+    }
+
+    /** @param {number[]|Float32Array} m Matrix */
+    transform(m) {
+        return transform(this, m);
     }
 }
 
