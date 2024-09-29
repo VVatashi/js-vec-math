@@ -1,5 +1,7 @@
 import { MathUtils } from '@vvatashi/js-math-utils/src/utils.js';
 
+export const ELEMENTS = 3;
+
 /**
  * @param {number[]|Float32Array} a
  * @param {number[]|Float32Array} b
@@ -20,14 +22,14 @@ export /*@__INLINE__*/ function cross(a, b) {
     ];
 }
 
-/** @param {number[]|Float32Array} vec */
-export /*@__INLINE__*/ function sqrMagnitude(vec) {
-    return /*@__PURE__*/ dot(vec, vec);
+/** @param {number[]|Float32Array} v Vector */
+export /*@__INLINE__*/ function sqrMagnitude(v) {
+    return /*@__PURE__*/ dot(v, v);
 }
 
-/** @param {number[]|Float32Array} vec */
-export /*@__INLINE__*/ function magnitude(vec) {
-    return /*@__PURE__*/ Math.fround(Math.hypot(...vec));
+/** @param {number[]|Float32Array} v Vector */
+export /*@__INLINE__*/ function magnitude(v) {
+    return /*@__PURE__*/ Math.fround(Math.hypot(...v));
 }
 
 /**
@@ -138,15 +140,19 @@ export class Vec3 extends Float32Array {
     static get zero() {
         return [0, 0, 0];
     }
+
     static get one() {
         return [1, 1, 1];
     }
+
     static get unitX() {
         return [1, 0, 0];
     }
+
     static get unitY() {
         return [0, 1, 0];
     }
+
     static get unitZ() {
         return [0, 0, 1];
     }
@@ -363,15 +369,13 @@ export class Vec3 extends Float32Array {
 
     /** @param {number|number[]|Float32Array} values */
     constructor(...values) {
-        const components = 3;
-
         switch (values.length) {
             case 0:
-                super(components);
+                super(ELEMENTS);
                 break;
 
             case 1:
-                if (typeof values[0] === 'number') super(components).fill(values[0]);
+                if (typeof values[0] === 'number') super(ELEMENTS).fill(values[0]);
                 else super(values[0]);
                 break;
 
@@ -393,50 +397,62 @@ export class Vec3 extends Float32Array {
     static smoothstep = smoothstep;
     static smootherstep = smootherstep;
 
-    /** @param {number[]|Float32Array} vec */
-    add(vec) {
-        this[0] += vec[0];
-        this[1] += vec[1];
-        this[2] += vec[2];
+    /**
+     * @param {number[]|Float32Array} values
+     * @param {number} offset
+     */
+    copyFrom(values, offset = 0) {
+        for (let i = 0; i < ELEMENTS; i++) this[i] = values[offset + i];
 
         return this;
     }
 
-    /** @param {number[]|Float32Array} vec */
-    subtract(vec) {
-        this[0] -= vec[0];
-        this[1] -= vec[1];
-        this[2] -= vec[2];
+    /**
+     * @param {number[]|Float32Array} values
+     * @param {number} offset
+     */
+    copyTo(values, offset = 0) {
+        for (let i = 0; i < ELEMENTS; i++) values[offset + i] = this[i];
+
+        return this;
+    }
+
+    /** @param {number[]|Float32Array} v Vector */
+    add(v) {
+        for (let i = 0; i < ELEMENTS; i++) this[i] += v[i];
+
+        return this;
+    }
+
+    /** @param {number[]|Float32Array} v Vector */
+    subtract(v) {
+        for (let i = 0; i < ELEMENTS; i++) this[i] -= v[i];
 
         return this;
     }
 
     /** @param {number} value */
     multiply(value) {
-        this[0] *= value;
-        this[1] *= value;
-        this[2] *= value;
+        for (let i = 0; i < ELEMENTS; i++) this[i] *= value;
 
         return this;
     }
 
     /** @param {number} value */
     divide(value) {
-        this[0] /= value;
-        this[1] /= value;
-        this[2] /= value;
+        for (let i = 0; i < ELEMENTS; i++) this[i] /= value;
 
         return this;
     }
 
-    /** @param {number[]|Float32Array} vec */
-    /*@__INLINE__*/ dot(vec) {
-        return /*@__PURE__*/ dot(this, vec);
+    /** @param {number[]|Float32Array} v Vector */
+    /*@__INLINE__*/ dot(v) {
+        return /*@__PURE__*/ dot(this, v);
     }
 
-    /** @param {number[]|Float32Array} vec */
-    /*@__INLINE__*/ cross(vec) {
-        [this.x, this.y, this.z] = /*@__PURE__*/ cross(this, vec);
+    /** @param {number[]|Float32Array} v Vector */
+    /*@__INLINE__*/ cross(v) {
+        [this[0], this[1], this[2]] = /*@__PURE__*/ cross(this, v);
 
         return this;
     }

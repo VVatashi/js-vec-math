@@ -1,3 +1,4 @@
+import { expect, test } from '@jest/globals';
 import { Vec3 } from '../src/vec3.js';
 
 test('zero', () => {
